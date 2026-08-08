@@ -30,7 +30,7 @@ CORS_ORIGIN=http://localhost:5173
 ```bash
 docker run --name wealth-os-db -e MYSQL_ROOT_PASSWORD=yourpassword -e MYSQL_DATABASE=wealth_os -p 3306:3306 -d mysql:8
 ```
-اگه پورت 3306 روی سیستمت اشغاله (مثلاً یه نصب MySQL دیگه در حال اجراست)، پورت میزبان رو عوض کن، مثلاً `-p 3307:3306`، و `DB_PORT=3307` رو در `api/.env` ست کن.
+اگه پورت 3306 روی سیستمت اشغاله (مثلاً یه نصب MySQL دیگه در حال اجراست)، پورت میزبان رو عوض کن، مثلاً `-p 3307:3306`، و در `api/.env` هم `DB_PORT=3307` ست کن **و هم** `DB_HOST=127.0.0.1` (نه `localhost`) — روی لینوکس/مک، درایور PDO مای‌اسکیوال وقتی `DB_HOST=localhost` باشه از Unix socket وصل می‌شه و `DB_PORT` رو کلاً نادیده می‌گیره، پس بدون این تغییر به container وصل نمی‌شه.
 
 برای ایمپورت اسکیما داخل container (در PowerShell از `<` استفاده نکن، پشتیبانی نمی‌شه):
 ```powershell
