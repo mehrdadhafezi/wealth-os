@@ -10,10 +10,13 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",
+    "concurrently": "^8.2.2",
     "vite": "^5.2.0"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently -n vite,php -c blue,green \"vite\" \"npm:dev:php\"",
+    "dev:vite": "vite",
+    "dev:php": "php -S localhost:8000 -t .",
     "build": "vite build",
     "preview": "vite preview"
   }

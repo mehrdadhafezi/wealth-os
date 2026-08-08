@@ -1,16 +1,40 @@
 # Wealth OS — راهنمای Deploy
 
-## مراحل Deploy روی Vercel
+## راه‌اندازی محلی (Local development)
+
+این پروژه یک بک‌اند PHP + MySQL داره (پوشه‌ی `api/`). چون Vite فقط
+فایل‌های فرانت‌اند رو سرو می‌کنه و PHP رو اجرا نمی‌کنه، `npm run dev`
+یک سرور PHP محلی رو هم همزمان با Vite بالا می‌آره و `/api` رو با پراکسی
+به همون سرور وصل می‌کنه (تنظیمش در `vite.config.js`).
 
 ### ۱. نصب dependencies
 ```bash
 npm install
 ```
+(به `php` روی PATH سیستم هم نیاز داری — `php -v` رو چک کن.)
 
-### ۲. تست محلی
+### ۲. دیتابیس MySQL
+یک دیتابیس MySQL بساز و اسکیمای `api/schema.sql` رو توش اجرا کن. بعد
+`api/.env` رو از روی `api/.env.example` بساز و پر کن:
+```
+DB_HOST=localhost
+DB_NAME=...
+DB_USER=...
+DB_PASS=...
+CORS_ORIGIN=http://localhost:5173
+```
+
+### ۳. اجرای همزمان Vite و PHP
 ```bash
 npm run dev
 ```
+این هم Vite (پورت 5173) و هم سرور PHP (پورت 8000، سرو شده از ریشه‌ی
+پروژه تا مسیر `/api/...` درست resolve بشه) رو بالا می‌آره. اگه فقط
+یکی‌شون رو لازم داری: `npm run dev:vite` یا `npm run dev:php`.
+
+اگه سرور PHP‌ت جای دیگه‌ای اجرا می‌شه (پورت/هاست متفاوت)، آدرسش رو با
+`VITE_PHP_TARGET` (برای پراکسی Vite) یا مستقیماً با `VITE_API_BASE_URL`
+در `.env.local` تنظیم کن.
 
 ### ۳. Deploy روی Vercel
 ```bash
